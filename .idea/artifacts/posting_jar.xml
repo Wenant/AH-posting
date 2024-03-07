@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="posting:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/posting_jar</output-path>
-    <root id="archive" name="posting.jar">
-      <element id="module-output" name="posting" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../OpenCV/build/java/opencv-480.jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>
