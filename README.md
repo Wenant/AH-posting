@@ -3,10 +3,6 @@
 An OpenCV based program for automated posting and canceling of items 
 on the World of Warcraft auction house.
 
-Программа на основе OpenCV для автоматического 
-размещения и отмены предметов на аукционе в World of Warcraft.
-
-
 
 - Java 11
 - OpenCV 3.4.3

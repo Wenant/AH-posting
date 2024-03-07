@@ -11,12 +11,10 @@ import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
-public class Main {
+public class TSMHelper {
     public static void main(String[] args) {
-        // Загрузка библиотеки OpenCV
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-        // Создание окна
         JFrame frame = new JFrame("TSM Helper");
         JLabel label = new JLabel("To stop the program, close the window");
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -32,7 +30,6 @@ public class Main {
             Mat postButtonImg = Imgcodecs.imread("post.jpg");
             Mat cancelButtonImg = Imgcodecs.imread("cancel.jpg");
 
-            // Бесконечный цикл для поиска и клика по кнопкам
             while(true){
                 BufferedImage screenshot = robot.createScreenCapture(screenRect);
                 Mat screen = convertBufferedImageToMat(screenshot);
@@ -44,28 +41,21 @@ public class Main {
         }
     }
 
-    // Поиск и клик по кнопке на экране
     private static void compareAndClick(Robot robot, Mat screen, Mat buttonImg) {
-        //создание таблицы результата и поиск шаблона на изображение
         Mat result = new Mat();
         Imgproc.matchTemplate(screen, buttonImg, result, Imgproc.TM_CCOEFF_NORMED);
-
-        // поиск совпадений и получение координат кнопки на экране
         Core.MinMaxLocResult mmr = Core.minMaxLoc(result);
         Point matchLocation = mmr.maxLoc;
-
-        // Если совпадение найдено, кликнуть по кнопке
         if (Core.minMaxLoc(result).maxVal >= 0.99) {
             robot.mouseMove((int) matchLocation.x, (int) matchLocation.y);
             robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             robot.delay(200);
             robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-            // Перемещение курсора на небольшое расстояние
             robot.mouseMove((int) matchLocation.x, (int) matchLocation.y - 100);
         }
     }
 
-    // Перевод BufferedImage в Mat
+
     private static Mat convertBufferedImageToMat(BufferedImage imageIn) {
         BufferedImage image = new BufferedImage(imageIn.getWidth(), imageIn.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
         Graphics2D g = image.createGraphics();
